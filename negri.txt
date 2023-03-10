@@ -1,0 +1,71 @@
+ ============== ==== ==== ======= ===== ====================
+                    Min  Max   Mean    SD   Class Correlation
+    ============== ==== ==== ======= ===== ====================
+    sepal length:   4.3  7.9   5.84   0.83    0.7826
+    sepal width:    2.0  4.4   3.05   0.43   -0.4194
+    petal length:   1.0  6.9   3.76   1.76    0.9490  (high!)
+    petal width:    0.1  2.5   1.20   0.76    0.9565  (high!)
+    ============== ==== ==== ======= ===== ====================
+
+x_train, x_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], random_state=0)
+def calculator(res1, res2, res3, res4):
+    l = list()
+    for i in x_train:
+        l.append(((i[0] - res1)**2 + (i[1] - res2)**2 + (i[2] - res3)**2 + (i[3] - res4)**2)**0.5)
+    at = l.index(min(l))
+    aa = y_train[at]
+    at = l[at]
+    l.remove(at)
+    bt = l.index(min(l))
+    ba = y_train[bt]
+    bt = l[bt]
+    l.remove(bt)
+    ct = l.index(min(l))
+    ca = y_train[ct]
+    ct = l[ct]
+    l.remove(ct)
+    if ca != ba and aa != ca and ba != ca:
+        return aa
+    elif ba == aa or ba == ca:
+        return ba
+    elif aa == ca:
+        return aa
+count = 0
+c = 0
+for i in x_test:
+    q = calculator(i[0], i[1], i[2], i[3])
+    if q == y_test[count]:
+        c += 1
+    count += 1
+print(c/count)
+
+x_train, x_test, y_train, y_test = train_test_split(iris_dataset['data'], iris_dataset['target'], random_state=0)
+def calculator(res1, res2, res3, res4, negri_za_rabotoi):
+    aa = []
+    negr = 0
+    l = list()
+    for i in x_train:
+        l.append(((i[0] - res1)**2 + (i[1] - res2)**2 + (i[2] - res3)**2 + (i[3] - res4)**2)**0.5)
+    for i in range(negri_za_rabotoi):
+        at = l.index(min(l))
+        aa.append(y_train[at])
+        l.pop(at)
+    if aa.count(2)> aa.count(1) and aa.count(2)>aa.count(0):
+        negr = 2
+        return negr
+    if aa.count(1)> aa.count(2) and aa.count(1)>aa.count(0):
+        negr = 1
+        return negr
+    if aa.count(0)> aa.count(1) and aa.count(0)>aa.count(2):
+        negr = 0
+        return negr
+
+count = 0
+c = 0
+p = 3
+for i in x_test:
+    q = calculator(i[0], i[1], i[2], i[3],p)
+    if q == y_test[count]:
+        c += 1
+    count += 1
+print(c/count)
